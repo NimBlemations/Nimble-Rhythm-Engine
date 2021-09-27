@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Assets/Images/XML/sparrowv2.gd" type="Script" id=2]
+
+[node name="XML" type="Sprite"]
+centered = false
+region_enabled = true
+script = ExtResource( 2 )
+spriteXml = "res://Assets/Images/XML/Spritesheet/"
