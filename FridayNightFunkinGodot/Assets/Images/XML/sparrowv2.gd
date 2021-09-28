@@ -1,3 +1,5 @@
+tool
+
 extends Sprite
 
 var xml = XMLParser.new()
@@ -7,9 +9,8 @@ export var spriteXml : String = String("res://Assets/Images/XML/Spritesheet")
 export var spriteXmlOffset : String = String("res://Assets/Images/XML/Spritesheet")
 export var spriteXmlThumbnail : String
 
-func xmlRegion(node : int):
+func xmlRegion():
 	
-	xml.seek(node)
 	self.region_rect = Rect2(xml.get_attribute_value(1), xml.get_attribute_value(2), xml.get_attribute_value(3), xml.get_attribute_value(4))
 	if xml.get_attribute_count() >= 7:
 		if self.flip_h == false:
@@ -27,7 +28,7 @@ func xmlRegionExec(node : String):
 				xml.read()
 			else:
 				if node in xml.get_attribute_value(0):
-					xmlRegion(xml.get_current_line())
+					xmlRegion()
 					finished = true
 					print("Finished region")
 				else:
@@ -46,12 +47,12 @@ func xmlRegionAnim(node : String, time : float):
 				xml.read()
 			else:
 				if node in xml.get_attribute_value(0):
-					xmlRegion(xml.get_current_line())
+					xmlRegion()
 					print(Engine.get_frames_per_second() / (time * Engine.get_frames_per_second()))
 					while node in xml.get_attribute_value(0):
 						yield(get_tree().create_timer(Engine.get_frames_per_second() / (time * Engine.get_frames_per_second())), "timeout")
-						xmlRegion(xml.get_current_line())
-						xml.read()
+						xmlRegion()
+						print("Fard", xml.get_current_line())
 					finished = true
 					print("Finished animation")
 				else:
@@ -70,7 +71,7 @@ func xmlThumbnailImage():
 				xml.read()
 			else:
 				if spriteXmlThumbnail in xml.get_attribute_value(0):
-					xmlRegion(xml.get_current_line())
+					xmlRegion()
 					finished = true
 					print("Finished region")
 				else:
