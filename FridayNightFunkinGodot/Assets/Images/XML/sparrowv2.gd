@@ -8,7 +8,6 @@ var txtOffset = File.new()
 export var spriteXml : String = String("res://Assets/Images/XML/Spritesheet")
 export var spriteXmlOffset : String = String("res://Assets/Images/XML/Spritesheet")
 export var spriteXmlThumbnail : String
-export var spriteXmlFrameRate : int = int(24)
 
 func xmlRegion(node : int):
 	
@@ -38,8 +37,10 @@ func xmlRegionExec(node : String):
 		print("Finished code")
 	else:
 		printerr("You forgot to input an XML or Region Image.")
+
 func xmlRegionAnim(node : String, time : float):
 	if ".xml" in spriteXml and not node == null:
+		xml.open(spriteXml)
 		var finished : bool = bool(false)
 		while not finished == true:
 			if not xml.get_node_name() == "SubTexture":
@@ -52,7 +53,7 @@ func xmlRegionAnim(node : String, time : float):
 						yield(get_tree().create_timer(Engine.get_frames_per_second() / (time * Engine.get_frames_per_second())), "timeout")
 						xmlRegion(xml.get_current_line())
 					finished = true
-					print("Finished region")
+					print("Finished animation")
 				else:
 					xml.read()
 		print("Finished code")
@@ -81,5 +82,6 @@ func xmlThumbnailImage():
 func _ready():
 	print(xml)
 	xml.open(spriteXml)
-	txtOffset.open(spriteXmlOffset)
+	if ".txt" in spriteXmlOffset:
+		txtOffset.open(spriteXmlOffset)
 	xmlThumbnailImage()
