@@ -1,135 +1,13 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://Assets/Images/XML/XML.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Assets/Images/Arrows/Spritesheet/NOTE_assets.png" type="Texture" id=2]
 [ext_resource path="res://Assets/Images/Arrows/Spritesheet/NOTE_assets_norm.png" type="Texture" id=3]
-
-[sub_resource type="Animation" id=1]
-resource_name = "Confirm"
-length = 0.5
-tracks/0/type = "method"
-tracks/0/path = NodePath(".")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 0.1, 0.2 ),
-"transitions": PoolRealArray( 1, 1, 1 ),
-"values": [ {
-"args": [ "down confirm0000" ],
-"method": "xmlRegionExec"
-}, {
-"args": [ "down confirm0001" ],
-"method": "xmlRegionExec"
-}, {
-"args": [ "down confirm0002" ],
-"method": "xmlRegionExec"
-} ]
-}
-
-[sub_resource type="Animation" id=2]
-resource_name = "Idle"
-length = 0.1
-tracks/0/type = "method"
-tracks/0/path = NodePath(".")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"values": [ {
-"args": [ "arrowDOWN" ],
-"method": "xmlRegionExec"
-} ]
-}
-
-[sub_resource type="Animation" id=3]
-length = 0.5
-tracks/0/type = "method"
-tracks/0/path = NodePath(".")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 0.1 ),
-"transitions": PoolRealArray( 1, 1 ),
-"values": [ {
-"args": [ "down press0000" ],
-"method": "xmlRegionExec"
-}, {
-"args": [ "down press0002" ],
-"method": "xmlRegionExec"
-} ]
-}
-
-[sub_resource type="Animation" id=4]
-resource_name = "Confirm"
-length = 0.5
-tracks/0/type = "method"
-tracks/0/path = NodePath(".")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 0.1, 0.2 ),
-"transitions": PoolRealArray( 1, 1, 1 ),
-"values": [ {
-"args": [ "down confirm0000" ],
-"method": "xmlRegionExec"
-}, {
-"args": [ "down confirm0001" ],
-"method": "xmlRegionExec"
-}, {
-"args": [ "down confirm0002" ],
-"method": "xmlRegionExec"
-} ]
-}
-
-[sub_resource type="Animation" id=5]
-resource_name = "Idle"
-length = 0.1
-tracks/0/type = "method"
-tracks/0/path = NodePath(".")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"values": [ {
-"args": [ "arrowDOWN" ],
-"method": "xmlRegionExec"
-} ]
-}
-
-[sub_resource type="Animation" id=6]
-resource_name = "Press"
-length = 0.5
-tracks/0/type = "method"
-tracks/0/path = NodePath(".")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 0.1 ),
-"transitions": PoolRealArray( 1, 1 ),
-"values": [ {
-"args": [ "down press0000" ],
-"method": "xmlRegionExec"
-}, {
-"args": [ "down press0002" ],
-"method": "xmlRegionExec"
-} ]
-}
+[ext_resource path="res://Assets/Images/Arrows/FunkinArrows.gd" type="Script" id=4]
 
 [node name="ArrowSet" type="Node2D"]
+script = ExtResource( 4 )
+songJsonPath = "res://Assets/Songs/Fresh/fresh.json"
 
 [node name="ArrowLeft" parent="." instance=ExtResource( 1 )]
 position = Vector2( 40.4633, 29.6051 )
@@ -139,11 +17,6 @@ region_rect = Rect2( 672, 416, 154, 157 )
 spriteXml = "res://Assets/Images/Arrows/Spritesheet/NOTE_assets.xml"
 spriteXmlThumbnail = "arrowLEFT"
 
-[node name="ArrowAnim" type="AnimationPlayer" parent="ArrowLeft"]
-anims/Confirm = SubResource( 1 )
-anims/Idle = SubResource( 2 )
-anims/Press = SubResource( 3 )
-
 [node name="ArrowDown" parent="." instance=ExtResource( 1 )]
 position = Vector2( 225.46, 29.6051 )
 texture = ExtResource( 2 )
@@ -152,7 +25,18 @@ region_rect = Rect2( 10, 255, 157, 154 )
 spriteXml = "res://Assets/Images/Arrows/Spritesheet/NOTE_assets.xml"
 spriteXmlThumbnail = "arrowDOWN"
 
-[node name="ArrowAnim" type="AnimationPlayer" parent="ArrowDown"]
-anims/Confirm = SubResource( 4 )
-anims/Idle = SubResource( 5 )
-anims/Press = SubResource( 6 )
+[node name="ArrowUp" parent="." instance=ExtResource( 1 )]
+position = Vector2( 428.585, 27.8233 )
+texture = ExtResource( 2 )
+normal_map = ExtResource( 3 )
+region_rect = Rect2( 177, 255, 157, 154 )
+spriteXml = "res://Assets/Images/Arrows/Spritesheet/NOTE_assets.xml"
+spriteXmlThumbnail = "arrowUP"
+
+[node name="ArrowRight" parent="." instance=ExtResource( 1 )]
+position = Vector2( 617.455, 27.8233 )
+texture = ExtResource( 2 )
+normal_map = ExtResource( 3 )
+region_rect = Rect2( 10, 419, 154, 157 )
+spriteXml = "res://Assets/Images/Arrows/Spritesheet/NOTE_assets.xml"
+spriteXmlThumbnail = "arrowRIGHT"

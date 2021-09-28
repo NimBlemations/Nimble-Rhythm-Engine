@@ -52,7 +52,7 @@ func xmlRegionAnim(node : String, time : float):
 					while node in xml.get_attribute_value(0):
 						yield(get_tree().create_timer(Engine.get_frames_per_second() / (time * Engine.get_frames_per_second())), "timeout")
 						xmlRegion()
-						print("Fard", xml.get_current_line())
+						print("Tick", xml.get_current_line())
 					finished = true
 					print("Finished animation")
 				else:
