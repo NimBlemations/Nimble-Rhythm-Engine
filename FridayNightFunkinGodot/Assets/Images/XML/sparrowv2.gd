@@ -38,6 +38,26 @@ func xmlRegionExec(node : String):
 		print("Finished code")
 	else:
 		printerr("You forgot to input an XML or Region Image.")
+func xmlRegionAnim(node : String, time : float):
+	if ".xml" in spriteXml and not node == null:
+		var finished : bool = bool(false)
+		while not finished == true:
+			if not xml.get_node_name() == "SubTexture":
+				print(xml.get_node_name())
+				xml.read()
+			else:
+				if node in xml.get_attribute_value(0):
+					xmlRegion(xml.get_current_line())
+					while node in xml.get_attribute_value(0):
+						yield(get_tree().create_timer(Engine.get_frames_per_second() / (time * Engine.get_frames_per_second())), "timeout")
+						xmlRegion(xml.get_current_line())
+					finished = true
+					print("Finished region")
+				else:
+					xml.read()
+		print("Finished code")
+	else:
+		printerr("You forgot to input an XML or Region Image.")
 		
 
 func xmlThumbnailImage():
