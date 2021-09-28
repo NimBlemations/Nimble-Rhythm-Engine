@@ -1,5 +1,3 @@
-tool
-
 extends Sprite
 
 var xml = XMLParser.new()
@@ -49,9 +47,11 @@ func xmlRegionAnim(node : String, time : float):
 			else:
 				if node in xml.get_attribute_value(0):
 					xmlRegion(xml.get_current_line())
+					print(Engine.get_frames_per_second() / (time * Engine.get_frames_per_second()))
 					while node in xml.get_attribute_value(0):
 						yield(get_tree().create_timer(Engine.get_frames_per_second() / (time * Engine.get_frames_per_second())), "timeout")
 						xmlRegion(xml.get_current_line())
+						xml.read()
 					finished = true
 					print("Finished animation")
 				else:
