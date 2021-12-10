@@ -1,0 +1,14 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://Assets/Images/XML/XML.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Assets/Images/Arrows/Spritesheet/NOTE_assets_norm.png" type="Texture" id=2]
+[ext_resource path="res://Assets/Images/Arrows/Spritesheet/NOTE_assets.png" type="Texture" id=3]
+[ext_resource path="res://Assets/Images/Arrows/GaminArrows.gd" type="Script" id=4]
+
+[node name="Node2D" type="Node2D"]
+script = ExtResource( 4 )
+
+[node name="XML" parent="." instance=ExtResource( 1 )]
+position = Vector2( 361.749, 121.112 )
+texture = ExtResource( 3 )
+normal_map = ExtResource( 2 )

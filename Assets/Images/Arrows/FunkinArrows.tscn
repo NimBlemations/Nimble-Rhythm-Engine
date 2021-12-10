@@ -1,0 +1,39 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://Assets/Images/XML/XML.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Assets/Images/Arrows/Spritesheet/NOTE_assets.png" type="Texture" id=2]
+[ext_resource path="res://Assets/Images/Arrows/Spritesheet/NOTE_assets_norm.png" type="Texture" id=3]
+[ext_resource path="res://Assets/Images/Arrows/FunkinArrows.gd" type="Script" id=4]
+
+[node name="ArrowSet" type="Node2D"]
+script = ExtResource( 4 )
+whichSide = "Right"
+songJsonPath = "res://Assets/Songs/Fresh/fresh.json"
+
+[node name="ArrowLeft" parent="." instance=ExtResource( 1 )]
+position = Vector2( 26.2089, 27.8233 )
+scale = Vector2( 0.75, 0.75 )
+texture = ExtResource( 2 )
+normal_map = ExtResource( 3 )
+region_rect = Rect2( 672, 416, 154, 157 )
+
+[node name="ArrowDown" parent="." instance=ExtResource( 1 )]
+position = Vector2( 177.546, 29.605 )
+scale = Vector2( 0.75, 0.75 )
+texture = ExtResource( 2 )
+normal_map = ExtResource( 3 )
+region_rect = Rect2( 10, 255, 157, 154 )
+
+[node name="ArrowUp" parent="." instance=ExtResource( 1 )]
+position = Vector2( 339.495, 27.8233 )
+scale = Vector2( 0.75, 0.75 )
+texture = ExtResource( 2 )
+normal_map = ExtResource( 3 )
+region_rect = Rect2( 177, 255, 157, 154 )
+
+[node name="ArrowRight" parent="." instance=ExtResource( 1 )]
+position = Vector2( 489.166, 29.6051 )
+scale = Vector2( 0.75, 0.75 )
+texture = ExtResource( 2 )
+normal_map = ExtResource( 3 )
+region_rect = Rect2( 10, 419, 154, 157 )
