@@ -2,87 +2,67 @@ tool
 
 extends Sprite
 
-var xml = XMLParser.new()
-var txtOffset = File.new()
+onready var textureResourcePath = texture.resource_path
 
-export var spriteXml : String = String("res://Assets/Images/XML/Spritesheet")
-export var spriteXmlOffset : String = String("res://Assets/Images/XML/Spritesheet")
-export var spriteXmlThumbnail : String
+var xmlSprite : String
 
-func xmlRegion():
-	
-	self.region_rect = Rect2(xml.get_attribute_value(1), xml.get_attribute_value(2), xml.get_attribute_value(3), xml.get_attribute_value(4))
-	if xml.get_attribute_count() >= 7:
-		if self.flip_h == false:
-			self.offset = -Vector2(xml.get_attribute_value(5), xml.get_attribute_value(6))
-		else:
-			self.offset = -Vector2(-float(xml.get_attribute_value(5)), xml.get_attribute_value(6))
-	xml.read()
+var xmlShiftAnim : String
+var xmlShiftFrame = Engine.get_frames_per_second()
+var xmlShift = false
 
-func xmlRegionExec(node : String):
-	if ".xml" in spriteXml and not node == null:
-		var finished : bool = bool(false)
-		while not finished == true:
-			if not xml.get_node_name() == "SubTexture":
-				print(xml.get_node_name())
-				xml.read()
-			else:
-				if node in xml.get_attribute_value(0):
-					xmlRegion()
-					finished = true
-					print("Finished region")
+var xmlRegions : Array = Array()
+
+func xmlScan():
+	var xmlScanner = XMLParser.new()
+	if ".xml" in xmlSprite:
+		xmlScanner.open(xmlSprite)
+		var sword : int
+		while sword <= 1:
+			if xmlScanner.get_node_name() == "TextureAtlas":
+				sword += 1
+			if xmlScanner.get_node_name() == "SubTexture":
+				if xmlScanner.get_attribute_count() < 7:
+					xmlRegions.insert(xmlRegions.size(), [xmlScanner.get_attribute_value(0), xmlScanner.get_attribute_value(1), xmlScanner.get_attribute_value(2), xmlScanner.get_attribute_value(3), xmlScanner.get_attribute_value(4)])
 				else:
-					xml.read()
-		print("Finished code")
-	else:
-		printerr("You forgot to input an XML or Region Image.")
+					xmlRegions.insert(xmlRegions.size(), [xmlScanner.get_attribute_value(0), xmlScanner.get_attribute_value(1), xmlScanner.get_attribute_value(2), xmlScanner.get_attribute_value(3), xmlScanner.get_attribute_value(4), xmlScanner.get_attribute_value(5), xmlScanner.get_attribute_value(6)])
+			xmlScanner.read()
 
-func xmlRegionAnim(node : String, time : float):
-	if ".xml" in spriteXml and not node == null:
-		xml.open(spriteXml)
-		var finished : bool = bool(false)
-		while not finished == true:
-			if not xml.get_node_name() == "SubTexture":
-				print(xml.get_node_name())
-				xml.read()
-			else:
-				if node in xml.get_attribute_value(0):
-					xmlRegion()
-					print(Engine.get_frames_per_second() / (time * Engine.get_frames_per_second()))
-					while node in xml.get_attribute_value(0):
-						yield(get_tree().create_timer(Engine.get_frames_per_second() / (time * Engine.get_frames_per_second())), "timeout")
-						xmlRegion()
-						print("Tick", xml.get_current_line())
-					finished = true
-					print("Finished animation")
-				else:
-					xml.read()
-		print("Finished code")
+func xmlAnim(node : String, time : float):
+	xmlShiftFrame = Engine.get_frames_per_second() / (time * Engine.get_frames_per_second())
+	if not ".xml" in xmlSprite:
+		print(xmlSprite)
+		print("You don't have the xml dumbass")
+		return
+	print(xmlRegions.size())
+	if xmlRegions.size() == 0:
+		xmlSprite = textureResourcePath.replace(".png", ".xml")
+		xmlScan()
+		print("Scanny")
+	print(xmlRegions.size(), ", hopefully not 0.")
+	var ready = false
+	var frameint = null
+	for i in xmlRegions.size() - 1:
+		if node in xmlRegions[i][0]:
+			if ready != true:
+				ready = true
+			if frameint == null:
+				frameint = i
+	if ready == true:
+		xmlShift = true
+		while node in xmlRegions[frameint][0] and xmlShift == true:
+			if xmlShift == false:
+				return
+			self.region_rect = Rect2(Vector2(xmlRegions[frameint][1], xmlRegions[frameint][2]), Vector2(xmlRegions[frameint][3], xmlRegions[frameint][4]))
+			if xmlRegions[frameint].size() >= 6:
+				self.offset.x = -(int(xmlRegions[frameint][5]) if flip_h != true else int(xmlRegions[frameint][5]) * -1)
+				self.offset.y = -(int(xmlRegions[frameint][6]) if flip_v != true else int(xmlRegions[frameint][6]) * -1)
+			xmlShiftAnim = xmlRegions[frameint][0]
+			frameint += 1
+			yield(get_tree().create_timer(Engine.get_frames_per_second() / (time * Engine.get_frames_per_second())), "timeout")
+		print("Finished .xml anim")
 	else:
-		printerr("You forgot to input an XML or Region Image.")
-		
-
-func xmlThumbnailImage():
-	if ".xml" in spriteXml and not spriteXmlThumbnail == null:
-		var finished : bool = bool(false)
-		while not finished == true:
-			if not xml.get_node_name() == "SubTexture":
-				print(xml.get_node_name())
-				xml.read()
-			else:
-				if spriteXmlThumbnail in xml.get_attribute_value(0):
-					xmlRegion()
-					finished = true
-					print("Finished region")
-				else:
-					xml.read()
-		print("Finished code")
-	else:
-		printerr("You forgot to input an XML or Region Image.")
+		printerr("Not ready, fuckass")
 
 func _ready():
-	print(xml)
-	xml.open(spriteXml)
-	if ".txt" in spriteXmlOffset:
-		txtOffset.open(spriteXmlOffset)
-	xmlThumbnailImage()
+	xmlSprite = textureResourcePath.replace(".png", ".xml")
+	xmlScan()

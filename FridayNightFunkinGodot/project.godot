@@ -14,6 +14,10 @@ config/name="Friday Night Funkin Godot"
 run/main_scene="res://The3DTest.tscn"
 config/icon="res://icon.png"
 
+[debug]
+
+settings/fps/force_fps=120
+
 [display]
 
 window/size/width=1280

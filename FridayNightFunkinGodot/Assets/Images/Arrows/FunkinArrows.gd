@@ -8,34 +8,70 @@ onready var arrowDown : Sprite = get_node("ArrowDown")
 onready var arrowUp : Sprite = get_node("ArrowUp")
 onready var arrowRight : Sprite = get_node("ArrowRight")
 onready var jsonFile = File.new()
-onready var configControlsPath = String("user://NimbleRhythmEngine/Config/controls.cfg")
+onready var configControlsPath = String("user://Godot/NimbleRhythmEngine/Config/controls.cfg")
 onready var config = ConfigFile.new()
 
+var currentAnim : String
+
+var controlLeft : int
+var controlDown : int
+var controlUp : int
+var controlRight : int
+var controls
+
+func wait_anim_amount(arrow : Sprite):
+	yield(get_tree().create_timer(arrow.xmlShiftFrame), "timeout")
+
+func switch_anim(arrow : Sprite, anim : String, time : int):
+	if arrow.xmlShift == true:
+		arrow.xmlShift = false
+		yield(get_tree().create_timer(arrow.xmlShiftFrame), "timeout")
+		arrow.xmlAnim(anim, time)
+	else:
+		arrow.xmlAnim(anim, time)
+
 func _ready():
-	var controlLeft : int
-	var controlDown : int
-	var controlUp : int
-	var controlRight : int
-	var controls : int
 	#To use configged controls
 	if whichSide == "Right":
 		controls = config.load(configControlsPath)
 		if controls == OK:
-			controlLeft = config.get_value("otherKeys","controlLeft",65)
-			controlDown = config.get_value("otherKeys","controlDown",83)
-			controlUp = config.get_value("otherKeys","controlUp",87)
-			controlRight = config.get_value("otherKeys","controlRight",68)
+			controlLeft = config.get_value("otherKeys","controlLeft",KEY_LEFT)
+			controlDown = config.get_value("otherKeys","controlDown",KEY_DOWN)
+			controlUp = config.get_value("otherKeys","controlUp",KEY_UP)
+			controlRight = config.get_value("otherKeys","controlRight",KEY_RIGHT)
+			print("Loaded controls!")
 		else:
 			var file = File.new()
 			if file.file_exists(configControlsPath) == false:
-				config.set_value("otherKeys","controlLeft",65)
-				config.set_value("otherKeys","controlDown",83)
-				config.set_value("otherKeys","controlUp",87)
-				config.set_value("otherKeys","controlRight",68)
+				config.set_value("otherKeys","controlLeft",KEY_LEFT)
+				config.set_value("otherKeys","controlDown",KEY_DOWN)
+				config.set_value("otherKeys","controlUp",KEY_UP)
+				config.set_value("otherKeys","controlRight",KEY_RIGHT)
+				controlLeft = KEY_LEFT
+				controlDown = KEY_DOWN
+				controlUp = KEY_UP
+				controlRight = KEY_RIGHT
 				config.save(configControlsPath)
+				print("Saved controls!")
 	
 	var jsonDictionary : Dictionary
 	jsonFile.open(songJsonPath, File.READ)
 	
 	jsonDictionary = JSON.parse(jsonFile.get_as_text()).result
 	var notes : Array = jsonDictionary.get("song").get("notes")
+
+func _input(event):
+	if whichSide == "Right":
+		if event is InputEventKey:
+			#Left arrow
+			if Input.is_action_just_pressed("ui_left"):
+				switch_anim(arrowLeft, "left press0", 24)
+			else:
+				if Input.is_action_just_released("ui_left"):
+					switch_anim(arrowLeft, "arrowLEFT0", 24)
+			#Down arrow
+			if Input.is_action_just_pressed("ui_down"):
+				switch_anim(arrowDown, "down press0", 24)
+			else:
+				if Input.is_action_just_released("ui_down"):
+					switch_anim(arrowDown, "arrowDOWN0", 24)

@@ -6,4 +6,3 @@
 centered = false
 region_enabled = true
 script = ExtResource( 2 )
-spriteXml = "res://Assets/Images/XML/Spritesheet/"
