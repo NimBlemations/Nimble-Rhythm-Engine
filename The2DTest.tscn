@@ -1,14 +1,23 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://Assets/Images/XML/XML.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Assets/Images/XML/Spritesheet/BOYFRIEND/BOYFRIENDNORM.png" type="Texture" id=2]
 [ext_resource path="res://Assets/Images/XML/Spritesheet/BOYFRIEND/BOYFRIEND.png" type="Texture" id=3]
 [ext_resource path="res://The2DTest.gd" type="Script" id=4]
+[ext_resource path="res://Assets/Images/Arrows/FunkinArrows.tscn" type="PackedScene" id=5]
 
 [node name="Node2D" type="Node2D"]
 script = ExtResource( 4 )
 
 [node name="XML" parent="." instance=ExtResource( 1 )]
-position = Vector2( 221.623, 175.312 )
+position = Vector2( 472.21, 294.719 )
 texture = ExtResource( 3 )
 normal_map = ExtResource( 2 )
+offset = Vector2( -1, -20 )
+region_rect = Rect2( 0, 2344, 406, 392 )
+
+[node name="ArrowSetLeft" parent="." instance=ExtResource( 5 )]
+whichSide = "Left"
+
+[node name="ArrowSetRight" parent="." instance=ExtResource( 5 )]
+whichSide = "Right"

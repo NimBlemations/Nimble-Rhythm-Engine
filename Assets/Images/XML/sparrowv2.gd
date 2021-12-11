@@ -16,7 +16,7 @@ func xmlScan():
 	var xmlScanner = XMLParser.new()
 	if ".xml" in xmlSprite:
 		xmlScanner.open(xmlSprite)
-		var sword : int
+		var sword : int = 0
 		while sword <= 1:
 			if xmlScanner.get_node_name() == "TextureAtlas":
 				sword += 1
@@ -50,13 +50,14 @@ func xmlAnim(node : String, time : float):
 	if ready == true:
 		xmlShift = true
 		while node in xmlRegions[frameint][0] and xmlShift == true:
-			if xmlShift == false:
-				return
-			self.region_rect = Rect2(Vector2(xmlRegions[frameint][1], xmlRegions[frameint][2]), Vector2(xmlRegions[frameint][3], xmlRegions[frameint][4]))
-			if xmlRegions[frameint].size() >= 6:
-				self.offset.x = -(int(xmlRegions[frameint][5]) if flip_h != true else int(xmlRegions[frameint][5]) * -1)
-				self.offset.y = -(int(xmlRegions[frameint][6]) if flip_v != true else int(xmlRegions[frameint][6]) * -1)
-			xmlShiftAnim = xmlRegions[frameint][0]
+			if xmlRegions[frameint] != null:
+				if xmlShift == false:
+					return
+				self.region_rect = Rect2(Vector2(xmlRegions[frameint][1], xmlRegions[frameint][2]), Vector2(xmlRegions[frameint][3], xmlRegions[frameint][4]))
+				if xmlRegions[frameint].size() >= 6:
+					self.offset.x = -(int(xmlRegions[frameint][5]) if flip_h != true else int(xmlRegions[frameint][5]) * -1)
+					self.offset.y = -(int(xmlRegions[frameint][6]) if flip_v != true else int(xmlRegions[frameint][6]) * -1)
+				xmlShiftAnim = xmlRegions[frameint][0]
 			frameint += 1
 			yield(get_tree().create_timer(Engine.get_frames_per_second() / (time * Engine.get_frames_per_second())), "timeout")
 		print("Finished .xml anim")

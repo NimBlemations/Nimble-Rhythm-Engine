@@ -7,7 +7,6 @@
 
 [node name="ArrowSet" type="Node2D"]
 script = ExtResource( 4 )
-whichSide = "Right"
 songJsonPath = "res://Assets/Songs/Fresh/fresh.json"
 
 [node name="ArrowLeft" parent="." instance=ExtResource( 1 )]

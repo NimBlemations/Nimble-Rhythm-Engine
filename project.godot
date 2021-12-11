@@ -14,6 +14,10 @@ config/name="Friday Night Funkin Godot"
 run/main_scene="res://The3DTest.tscn"
 config/icon="res://icon.png"
 
+[autoload]
+
+SpriteUtils="*res://sprite_utils.gd"
+
 [debug]
 
 settings/fps/force_fps=120

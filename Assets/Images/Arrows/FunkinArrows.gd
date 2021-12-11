@@ -16,6 +16,8 @@ var arrowWindowApart : int = 20
 var arrowApart : int = 150
 var arrowWindowApartRightMultiplier : int = 7
 
+var switchingAnim : bool = false
+
 var controlLeft : int
 var controlDown : int
 var controlUp : int
@@ -39,12 +41,14 @@ func wait_anim_amount(arrow : Sprite):
 	yield(get_tree().create_timer(arrow.xmlShiftFrame), "timeout")
 
 func switch_anim(arrow : Sprite, anim : String, time : int):
+	switchingAnim = true
 	if arrow.xmlShift == true:
 		arrow.xmlShift = false
 		yield(get_tree().create_timer(arrow.xmlShiftFrame), "timeout")
 		arrow.xmlAnim(anim, time)
 	else:
 		arrow.xmlAnim(anim, time)
+	switchingAnim = false
 
 func _ready():
 	arrow_positional()
@@ -77,18 +81,26 @@ func _ready():
 	jsonDictionary = JSON.parse(jsonFile.get_as_text()).result
 	var notes : Array = jsonDictionary.get("song").get("notes")
 
-func _input(event):
+func _physics_process(delta):
 	if whichSide == "Right":
-		if event is InputEventKey:
-			#Left arrow
-			if Input.is_action_just_pressed("ui_left"):
+		# Left arrow
+		if Input.is_action_pressed("ui_left"):
+			if not "left press0" in arrowLeft.xmlShiftAnim:
 				switch_anim(arrowLeft, "left press0", 24)
-			else:
-				if Input.is_action_just_released("ui_left"):
-					switch_anim(arrowLeft, "arrowLEFT0", 24)
-			#Down arrow
-			if Input.is_action_just_pressed("ui_down"):
+		else:
+			if not switchingAnim and not "arrowLEFT0" in arrowLeft.xmlShiftAnim:
+				switch_anim(arrowLeft, "arrowLEFT0", 24)
+		# Down arrow
+		if Input.is_action_pressed("ui_down"):
+			if not "down press0" in arrowDown.xmlShiftAnim:
 				switch_anim(arrowDown, "down press0", 24)
-			else:
-				if Input.is_action_just_released("ui_down"):
-					switch_anim(arrowDown, "arrowDOWN0", 24)
+		else:
+			if not switchingAnim and not "arrowDOWN0" in arrowDown.xmlShiftAnim:
+				switch_anim(arrowDown, "arrowDOWN0", 24)
+		# Up arrow
+		if Input.is_action_pressed("ui_up"):
+			if not "up press0" in arrowUp.xmlShiftAnim:
+				switch_anim(arrowUp, "up press0", 24)
+		else:
+			if not switchingAnim and not "arrowUP0" in arrowUp.xmlShiftAnim:
+				switch_anim(arrowUp, "arrowUP0", 24)
