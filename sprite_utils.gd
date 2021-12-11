@@ -1,5 +1,8 @@
 extends Node
 
+export var xmlErrorAmount : int = 0
+export var loggerString : String = ""
+
 func switch_anim(sprite : Sprite, anim : String, time : int):
 	if sprite.xmlShift == true:
 		sprite.xmlShift = false

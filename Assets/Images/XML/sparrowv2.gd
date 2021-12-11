@@ -4,6 +4,9 @@ extends Sprite
 
 onready var textureResourcePath = texture.resource_path
 
+var loggerFile = File.new()
+var loggerString = SpriteUtils.loggerString
+
 var xmlSprite : String
 
 var xmlShiftAnim : String
@@ -17,14 +20,21 @@ func xmlScan():
 	if ".xml" in xmlSprite:
 		xmlScanner.open(xmlSprite)
 		var sword : int = 0
-		while sword <= 1:
-			if xmlScanner.get_node_name() == "TextureAtlas":
-				sword += 1
-			if xmlScanner.get_node_name() == "SubTexture":
-				if xmlScanner.get_attribute_count() < 7:
-					xmlRegions.insert(xmlRegions.size(), [xmlScanner.get_attribute_value(0), xmlScanner.get_attribute_value(1), xmlScanner.get_attribute_value(2), xmlScanner.get_attribute_value(3), xmlScanner.get_attribute_value(4)])
-				else:
-					xmlRegions.insert(xmlRegions.size(), [xmlScanner.get_attribute_value(0), xmlScanner.get_attribute_value(1), xmlScanner.get_attribute_value(2), xmlScanner.get_attribute_value(3), xmlScanner.get_attribute_value(4), xmlScanner.get_attribute_value(5), xmlScanner.get_attribute_value(6)])
+		while sword < 1:
+			if xmlScanner.get_node_type() == xmlScanner.NODE_ELEMENT_END:
+				if xmlScanner.get_node_name() == "TextureAtlas":
+					print("TexAtlasPass")
+					loggerString.insert(loggerString.length(), "Texture atlas pass\n")
+					sword += 1
+			if xmlScanner.get_node_type() == xmlScanner.NODE_ELEMENT:
+				if xmlScanner.get_node_name() == "SubTexture":
+					if xmlScanner.get_attribute_count() < 7:
+						xmlRegions.insert(xmlRegions.size(), [xmlScanner.get_attribute_value(0), xmlScanner.get_attribute_value(1), xmlScanner.get_attribute_value(2), xmlScanner.get_attribute_value(3), xmlScanner.get_attribute_value(4)])
+					else:
+						xmlRegions.insert(xmlRegions.size(), [xmlScanner.get_attribute_value(0), xmlScanner.get_attribute_value(1), xmlScanner.get_attribute_value(2), xmlScanner.get_attribute_value(3), xmlScanner.get_attribute_value(4), xmlScanner.get_attribute_value(5), xmlScanner.get_attribute_value(6)])
+			if xmlScanner.get_node_type() == xmlScanner.NODE_TEXT:
+				SpriteUtils.xmlErrorAmount += 1
+				printerr("Scan error amount: ", SpriteUtils.xmlErrorAmount)
 			xmlScanner.read()
 
 func xmlAnim(node : String, time : float = 30):

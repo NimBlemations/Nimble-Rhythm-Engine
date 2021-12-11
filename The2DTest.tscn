@@ -10,7 +10,8 @@
 script = ExtResource( 4 )
 
 [node name="XML" parent="." instance=ExtResource( 1 )]
-position = Vector2( 472.21, 294.719 )
+position = Vector2( 721.184, 358.287 )
+scale = Vector2( 0.8, 0.8 )
 texture = ExtResource( 3 )
 normal_map = ExtResource( 2 )
 offset = Vector2( -1, -20 )
@@ -21,3 +22,4 @@ whichSide = "Left"
 
 [node name="ArrowSetRight" parent="." instance=ExtResource( 5 )]
 whichSide = "Right"
+spritePlayer = NodePath("../XML")

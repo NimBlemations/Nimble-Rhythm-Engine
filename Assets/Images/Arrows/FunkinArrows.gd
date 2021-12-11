@@ -2,6 +2,12 @@ extends Node2D
 
 export(String, "Left", "Right") var whichSide
 export var songJsonPath : String = String("res://Assets/Songs/")
+export var spritePlayer : NodePath
+
+export var playerLeft : String
+export var playerDown : String
+export var playerUp : String
+export var playerRight : String
 
 onready var arrowLeft : Sprite = get_node("ArrowLeft")
 onready var arrowDown : Sprite = get_node("ArrowDown")
@@ -104,3 +110,10 @@ func _physics_process(delta):
 		else:
 			if not switchingAnim and not "arrowUP0" in arrowUp.xmlShiftAnim:
 				switch_anim(arrowUp, "arrowUP0", 24)
+		# Right Arrow
+		if Input.is_action_pressed("ui_right"):
+			if not "right press0" in arrowRight.xmlShiftAnim:
+				switch_anim(arrowRight, "right press0", 24)
+		else:
+			if not switchingAnim and not "arrowRIGHT0" in arrowRight.xmlShiftAnim:
+				switch_anim(arrowRight, "arrowRIGHT0", 24)
