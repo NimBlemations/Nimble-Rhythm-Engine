@@ -19,9 +19,8 @@ onready var configControlsPath = String("user://Godot/NimbleRhythmEngine/Config/
 onready var config = ConfigFile.new()
 
 var currentAnim : String
-var arrowWindowApart : int = 20
-var arrowApart : int = 150
-var arrowWindowApartRightMultiplier : int = 7
+var arrowWindowApart : int = 80
+var arrowApart : int = 125
 
 var sectionNumber : int = 0
 var sectionNotes : Array
@@ -42,10 +41,10 @@ func arrow_positional():
 		arrowRight.transform.origin = Vector2(arrowWindowApart + (arrowApart * 3), arrowWindowApart)
 	else:
 		if whichSide == "Right":
-			arrowRight.transform.origin = Vector2(OS.window_size.x - (arrowWindowApart * arrowWindowApartRightMultiplier), arrowWindowApart)
-			arrowUp.transform.origin = Vector2(OS.window_size.x - ((arrowWindowApart * arrowWindowApartRightMultiplier) + arrowApart), arrowWindowApart)
-			arrowDown.transform.origin = Vector2(OS.window_size.x - ((arrowWindowApart * arrowWindowApartRightMultiplier) + (arrowApart * 2)), arrowWindowApart)
-			arrowLeft.transform.origin = Vector2(OS.window_size.x - ((arrowWindowApart * arrowWindowApartRightMultiplier) + (arrowApart * 3)), arrowWindowApart)
+			arrowRight.transform.origin = Vector2(OS.window_size.x - arrowWindowApart, arrowWindowApart)
+			arrowUp.transform.origin = Vector2(OS.window_size.x - (arrowWindowApart  + arrowApart), arrowWindowApart)
+			arrowDown.transform.origin = Vector2(OS.window_size.x - (arrowWindowApart + (arrowApart * 2)), arrowWindowApart)
+			arrowLeft.transform.origin = Vector2(OS.window_size.x - (arrowWindowApart + (arrowApart * 3)), arrowWindowApart)
 
 func wait_anim_amount(arrow : Sprite):
 	yield(get_tree().create_timer(arrow.xmlShiftFrame), "timeout")
