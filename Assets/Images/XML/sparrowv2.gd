@@ -77,5 +77,5 @@ func xmlAnim(node : String, time : float = 30):
 		printerr("Not ready, fuckass")
 
 func _ready():
-	xmlSprite = textureResourcePath.replace(".png", ".xml")
+	xmlSprite = textureResourcePath.replace("." + textureResourcePath.get_extension(), ".xml")
 	xmlScan()

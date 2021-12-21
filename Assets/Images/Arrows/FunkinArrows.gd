@@ -9,6 +9,7 @@ export var playerDown : String
 export var playerUp : String
 export var playerRight : String
 
+onready var spritePlayerGet : Sprite = (get_node(spritePlayer) if spritePlayer != null else null)  
 onready var arrowLeft : Sprite = get_node("ArrowLeft")
 onready var arrowDown : Sprite = get_node("ArrowDown")
 onready var arrowUp : Sprite = get_node("ArrowUp")
@@ -21,6 +22,9 @@ var currentAnim : String
 var arrowWindowApart : int = 20
 var arrowApart : int = 150
 var arrowWindowApartRightMultiplier : int = 7
+
+var sectionNumber : int = 0
+var sectionNotes : Array
 
 var switchingAnim : bool = false
 
@@ -57,6 +61,7 @@ func switch_anim(arrow : Sprite, anim : String, time : int):
 	switchingAnim = false
 
 func _ready():
+	print(spritePlayer, "\n", spritePlayerGet)
 	arrow_positional()
 	#To use configged controls
 	if whichSide == "Right":
@@ -83,11 +88,19 @@ func _ready():
 	
 	var jsonDictionary : Dictionary
 	jsonFile.open(songJsonPath, File.READ)
+	print("Loading .json: ", jsonFile.get_path())
 	
 	jsonDictionary = JSON.parse(jsonFile.get_as_text()).result
 	var notes : Array = jsonDictionary.get("song").get("notes")
+	sectionNotes = notes[sectionNumber].get("sectionNotes")
 
-func _physics_process(delta):
+func _input(event):
+	if event is InputEventAction:
+		if Input.is_action_just_pressed("ui_left"):
+			print("Leg")
+			SpriteUtils.switch_anim(spritePlayerGet, playerLeft, 24)
+
+func _physics_process(_delta):
 	if whichSide == "Right":
 		# Left arrow
 		if Input.is_action_pressed("ui_left"):

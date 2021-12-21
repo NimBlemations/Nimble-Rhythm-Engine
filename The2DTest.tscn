@@ -23,3 +23,7 @@ whichSide = "Left"
 [node name="ArrowSetRight" parent="." instance=ExtResource( 5 )]
 whichSide = "Right"
 spritePlayer = NodePath("../XML")
+playerLeft = "BF NOTE LEFT0"
+playerDown = "BF NOTE DOWN0"
+playerUp = "BF NOTE UP0"
+playerRight = "BF NOTE RIGHT0"
