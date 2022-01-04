@@ -7,29 +7,36 @@
 
 [node name="ArrowSet" type="Node2D"]
 script = ExtResource( 4 )
-whichSide = "Right"
 songJsonPath = "res://Assets/Songs/Fresh/fresh.json"
 
 [node name="ArrowLeft" parent="." instance=ExtResource( 1 )]
-position = Vector2( 40.4633, 29.6051 )
+position = Vector2( 26.2089, 27.8233 )
+scale = Vector2( 0.75, 0.75 )
 texture = ExtResource( 2 )
 normal_map = ExtResource( 3 )
+centered = true
 region_rect = Rect2( 672, 416, 154, 157 )
 
 [node name="ArrowDown" parent="." instance=ExtResource( 1 )]
-position = Vector2( 225.46, 29.6051 )
+position = Vector2( 177.546, 29.605 )
+scale = Vector2( 0.75, 0.75 )
 texture = ExtResource( 2 )
 normal_map = ExtResource( 3 )
+centered = true
 region_rect = Rect2( 10, 255, 157, 154 )
 
 [node name="ArrowUp" parent="." instance=ExtResource( 1 )]
-position = Vector2( 428.585, 27.8233 )
+position = Vector2( 339.495, 27.8233 )
+scale = Vector2( 0.75, 0.75 )
 texture = ExtResource( 2 )
 normal_map = ExtResource( 3 )
+centered = true
 region_rect = Rect2( 177, 255, 157, 154 )
 
 [node name="ArrowRight" parent="." instance=ExtResource( 1 )]
-position = Vector2( 617.455, 27.8233 )
+position = Vector2( 489.166, 29.6051 )
+scale = Vector2( 0.75, 0.75 )
 texture = ExtResource( 2 )
 normal_map = ExtResource( 3 )
+centered = true
 region_rect = Rect2( 10, 419, 154, 157 )
