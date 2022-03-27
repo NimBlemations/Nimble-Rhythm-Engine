@@ -63,9 +63,9 @@ func xmlAnim(node : String, time : float = 30):
 	if ready == true and xmlShift != true and xmlAnimating != true:
 		xmlShift = true
 		xmlAnimating = true
-		while node in xmlRegions[frameint][0] and xmlShift == true:
+		while node in xmlRegions[frameint][0] and xmlShift == true and xmlAnimating == true:
 			if xmlRegions[frameint]:
-				if xmlShift == false:
+				if xmlShift == false and xmlAnimating == false:
 					print("Braking!")
 					return
 				self.region_rect = Rect2(Vector2(xmlRegions[frameint][1], xmlRegions[frameint][2]), Vector2(xmlRegions[frameint][3], xmlRegions[frameint][4]))
