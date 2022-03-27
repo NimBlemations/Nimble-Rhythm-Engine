@@ -57,11 +57,12 @@ func xmlAnim(node : String, time : float = 30):
 				ready = true
 			if frameint == null:
 				frameint = i
-	if ready == true:
+	if ready == true and xmlShift != true:
 		xmlShift = true
 		while node in xmlRegions[frameint][0] and xmlShift == true:
 			if xmlRegions[frameint]:
 				if xmlShift == false:
+					printerr("Braking!")
 					return
 				self.region_rect = Rect2(Vector2(xmlRegions[frameint][1], xmlRegions[frameint][2]), Vector2(xmlRegions[frameint][3], xmlRegions[frameint][4]))
 				if xmlRegions[frameint].size() >= 6:
@@ -73,6 +74,7 @@ func xmlAnim(node : String, time : float = 30):
 				frameint += 1
 			yield(get_tree().create_timer(Engine.get_frames_per_second() / (time * Engine.get_frames_per_second())), "timeout")
 		print("Finished .xml anim")
+		xmlShift = false
 	else:
 		printerr("Not ready, fuckass")
 

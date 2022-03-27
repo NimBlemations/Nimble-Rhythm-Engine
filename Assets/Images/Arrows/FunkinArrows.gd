@@ -9,7 +9,7 @@ export var playerDown : String
 export var playerUp : String
 export var playerRight : String
 
-onready var spritePlayerGet : Sprite = (get_node(spritePlayer) if spritePlayer != null else null)  
+onready var spritePlayerGet : Sprite = (get_node(spritePlayer) if spritePlayer != null else null)
 onready var arrowLeft : Sprite = get_node("ArrowLeft")
 onready var arrowDown : Sprite = get_node("ArrowDown")
 onready var arrowUp : Sprite = get_node("ArrowUp")
@@ -97,7 +97,6 @@ func _input(event):
 	if event is InputEventAction:
 		if Input.is_action_just_pressed("ui_left"):
 			print("Leg")
-			SpriteUtils.switch_anim(spritePlayerGet, playerLeft, 24)
 
 func _physics_process(_delta):
 	if whichSide == "Right":
@@ -105,6 +104,7 @@ func _physics_process(_delta):
 		if Input.is_action_pressed("ui_left"):
 			if not "left press0" in arrowLeft.xmlShiftAnim:
 				switch_anim(arrowLeft, "left press0", 24)
+				SpriteUtils.switch_anim(spritePlayerGet, playerLeft, 24)
 		else:
 			if not switchingAnim and not "arrowLEFT0" in arrowLeft.xmlShiftAnim:
 				switch_anim(arrowLeft, "arrowLEFT0", 24)
@@ -112,6 +112,7 @@ func _physics_process(_delta):
 		if Input.is_action_pressed("ui_down"):
 			if not "down press0" in arrowDown.xmlShiftAnim:
 				switch_anim(arrowDown, "down press0", 24)
+				SpriteUtils.switch_anim(spritePlayerGet, playerDown, 24)
 		else:
 			if not switchingAnim and not "arrowDOWN0" in arrowDown.xmlShiftAnim:
 				switch_anim(arrowDown, "arrowDOWN0", 24)
@@ -119,6 +120,7 @@ func _physics_process(_delta):
 		if Input.is_action_pressed("ui_up"):
 			if not "up press0" in arrowUp.xmlShiftAnim:
 				switch_anim(arrowUp, "up press0", 24)
+				SpriteUtils.switch_anim(spritePlayerGet, playerUp, 24)
 		else:
 			if not switchingAnim and not "arrowUP0" in arrowUp.xmlShiftAnim:
 				switch_anim(arrowUp, "arrowUP0", 24)
@@ -126,6 +128,7 @@ func _physics_process(_delta):
 		if Input.is_action_pressed("ui_right"):
 			if not "right press0" in arrowRight.xmlShiftAnim:
 				switch_anim(arrowRight, "right press0", 24)
+				SpriteUtils.switch_anim(spritePlayerGet, playerRight, 24)
 		else:
 			if not switchingAnim and not "arrowRIGHT0" in arrowRight.xmlShiftAnim:
 				switch_anim(arrowRight, "arrowRIGHT0", 24)
