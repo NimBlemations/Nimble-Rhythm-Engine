@@ -13,6 +13,8 @@ var xmlShiftAnim : String
 var xmlShiftFrame = Engine.get_frames_per_second()
 var xmlShift = false
 
+var xmlAnimating = false
+
 var xmlRegions : Array = Array()
 
 func xmlScan():
@@ -34,7 +36,8 @@ func xmlScan():
 						xmlRegions.insert(xmlRegions.size(), [xmlScanner.get_attribute_value(0), xmlScanner.get_attribute_value(1), xmlScanner.get_attribute_value(2), xmlScanner.get_attribute_value(3), xmlScanner.get_attribute_value(4), xmlScanner.get_attribute_value(5), xmlScanner.get_attribute_value(6)])
 			if xmlScanner.get_node_type() == xmlScanner.NODE_TEXT:
 				SpriteUtils.xmlErrorAmount += 1
-				printerr("Scan error amount: ", SpriteUtils.xmlErrorAmount)
+				if OS.is_debug_build():
+					printerr("Scan error amount: ", SpriteUtils.xmlErrorAmount)
 			xmlScanner.read()
 
 func xmlAnim(node : String, time : float = 30):
@@ -57,12 +60,13 @@ func xmlAnim(node : String, time : float = 30):
 				ready = true
 			if frameint == null:
 				frameint = i
-	if ready == true and xmlShift != true:
+	if ready == true and xmlShift != true and xmlAnimating != true:
 		xmlShift = true
+		xmlAnimating = true
 		while node in xmlRegions[frameint][0] and xmlShift == true:
 			if xmlRegions[frameint]:
 				if xmlShift == false:
-					printerr("Braking!")
+					print("Braking!")
 					return
 				self.region_rect = Rect2(Vector2(xmlRegions[frameint][1], xmlRegions[frameint][2]), Vector2(xmlRegions[frameint][3], xmlRegions[frameint][4]))
 				if xmlRegions[frameint].size() >= 6:
@@ -75,8 +79,12 @@ func xmlAnim(node : String, time : float = 30):
 			yield(get_tree().create_timer(Engine.get_frames_per_second() / (time * Engine.get_frames_per_second())), "timeout")
 		print("Finished .xml anim")
 		xmlShift = false
+		xmlAnimating = false
 	else:
-		printerr("Not ready, fuckass")
+		if xmlShift != true:
+			printerr("Not ready, fuckass")
+		else:
+			print("Braked")
 
 func _ready():
 	xmlSprite = textureResourcePath.replace("." + textureResourcePath.get_extension(), ".xml")
